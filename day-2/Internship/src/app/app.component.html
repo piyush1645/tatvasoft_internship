@@ -1,0 +1,15 @@
+<app-header></app-header>
+{{name}}
+<br>
+<button type="button" class="btn btn-success" (click)="listener()">Welcome</button>
+<p *ngIf="visibility">welcome {{name}}</p>
+<ul>
+    <li *ngFor="let item of list">
+        {{item}}
+
+    </li>
+</ul>
+<input type="text" [(ngModel)]="store">
+<router-outlet></router-outlet>
+
+
