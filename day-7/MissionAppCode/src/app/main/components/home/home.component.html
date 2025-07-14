@@ -8,9 +8,7 @@
       <p style="font-size: 20px; margin-left: 20px">
         Explore
         <span
-        
-          >
-          <b>{{ totalMission }} missions</b></span
+          ><b>{{ totalMission }} missions</b></span
         >
       </p>
     </div>
@@ -103,7 +101,6 @@
             "
           >
             NEW
-            
           </div>
           <div class="centered">{{ item.missionThemeName }}</div>
         </div>
@@ -219,8 +216,6 @@
       >
         <div class="col-sm-12 row">
           <div class="col-sm-3">
-            
-
             <img
               src="{{ item.missionImages }}"
               alt="no img"
@@ -236,10 +231,8 @@
               *ngIf="item.missionApplyStatus == 'Applied'"
             >
               APPLIED
-              
             </div>
             <div
-            
               class="top-center"
               *ngIf="item.missionApproveStatus === 'Approved'"
             >

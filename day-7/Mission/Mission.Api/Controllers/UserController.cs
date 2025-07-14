@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mission.Entities.ViewModels;
 using Mission.Services.IService;
@@ -11,10 +10,8 @@ namespace Mission.Api.Controllers
     public class UserController(IUserService userService) : ControllerBase
     {
         private readonly IUserService _userService = userService;
-
         [HttpGet]
         [Route("UserDetailList")]
-        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> GetUserDetailList()
         {
             var response = await _userService.GetUsersAsync();

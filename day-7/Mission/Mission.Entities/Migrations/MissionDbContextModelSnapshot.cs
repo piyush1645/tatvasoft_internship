@@ -214,38 +214,6 @@ namespace Mission.Entities.Migrations
                     b.ToTable("Missions");
                 });
 
-            modelBuilder.Entity("Mission.Entities.Models.MissionApplication", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("AppliedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("MissionId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MissionId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("MissionApplications");
-                });
-
             modelBuilder.Entity("Mission.Entities.Models.MissionSkill", b =>
                 {
                     b.Property<int>("Id")
@@ -331,10 +299,10 @@ namespace Mission.Entities.Migrations
                         new
                         {
                             Id = 1,
-                            EmailAddress = "piyush@gmail.com",
-                            FirstName = "piyush",
-                            LastName = "Mevada",
-                            Password = "1617",
+                            EmailAddress = "admin@tatvasoft.com",
+                            FirstName = "Admin",
+                            LastName = "Tatva",
+                            Password = "admin",
                             PhoneNumber = "01234567890",
                             UserType = "admin"
                         });
@@ -365,25 +333,6 @@ namespace Mission.Entities.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("MissionTheme");
-                });
-
-            modelBuilder.Entity("Mission.Entities.Models.MissionApplication", b =>
-                {
-                    b.HasOne("Mission.Entities.Models.Mission", "Mission")
-                        .WithMany()
-                        .HasForeignKey("MissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Mission.Entities.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Mission");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

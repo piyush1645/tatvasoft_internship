@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Mission.Entities;
-using Mission.Entities.Models;
 using Mission.Entities.ViewModels.Mission;
-using Mission.Entities.ViewModels.MissionApplication;
 using Mission.Repositories.IRepository;
 
 namespace Mission.Repositories.Repository
@@ -123,8 +120,8 @@ namespace Mission.Repositories.Repository
                      .Select(ms => ms.SkillName)
                      .ToList()),
                     //MissionStatus = m.RegistrationDeadLine < dateToCompare ? "Closed" : "Available",
-                    MissionApplyStatus = _dbContext.MissionApplications.Any(ma => !ma.IsDelete && ma.MissionId == m.Id && ma.UserId == userId) ? "Applied" : "Apply",
-                    MissionApproveStatus = _dbContext.MissionApplications.Any(ma => !ma.IsDelete && ma.MissionId == m.Id && ma.UserId == userId && ma.Status) ? "Approved" : "Applied",
+                    MissionApplyStatus = "Apply", //_dbContext.MissionApplications.Any(ma => ma.MissionId == m.Id && ma.UserId == userId) ? "Applied" : "Apply",
+                    MissionApproveStatus = "Applied", // _dbContext.MissionApplications.Any(ma => ma.MissionId == m.Id && ma.UserId == userId && ma.Status) ? "Approved" : "Applied",
                 }).ToList();
                 return response;
             }
@@ -132,74 +129,6 @@ namespace Mission.Repositories.Repository
             {
                 throw;
             }
-        }
-
-        public async Task<(bool result, string message)> ApplyMission(ApplyMissionRequestModel model)
-        {
-            var mission = _dbContext.Missions.Find(model.MissionId);
-
-            if (mission == null)
-                return (false, "Not Found");
-
-            if (mission.TotalSeats <= 0)
-                return (false, "You can apply on this mission because seats are already full");
-
-            var missionApplication = new MissionApplication()
-            {
-                MissionId = model.MissionId,
-                UserId = model.UserId,
-                AppliedDate = model.AppliedDate.ToUniversalTime(),
-            };
-
-            mission.TotalSeats--;
-
-            _dbContext.MissionApplications.Add(missionApplication);
-
-            await _dbContext.SaveChangesAsync();
-            return (true, "Mission Applied Successfully");
-        }
-
-        public async Task<List<MissionApplicationResponseModel>> GetMissionApplicationList()
-        {
-            return await _dbContext.MissionApplications.Where(m => !m.IsDelete)
-                .Select(m => new MissionApplicationResponseModel()
-                {
-                    Id = m.Id,
-                    MissionTitle = m.Mission.MissionTitle,
-                    MissionTheme = m.Mission.MissionTheme.ThemeName,
-                    UserName = m.User.FirstName + " " + m.User.LastName,
-                    AppliedDate = m.AppliedDate,
-                    Status = m.Status,
-                }).ToListAsync();
-        }
-
-        public async Task<bool> MissionApplicationApprove(MissionApplicationResponseModel model)
-        {
-            var missionApplication = _dbContext.MissionApplications.Find(model.Id);
-
-            if (missionApplication == null)
-                return false;
-
-            missionApplication.Status = true;
-
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> MissionApplicationDelete(MissionApplicationResponseModel model)
-        {
-            var missionApplication = _dbContext.MissionApplications
-                .Include(m => m.Mission).FirstOrDefault(m => m.Id == model.Id);
-
-            if (missionApplication == null)
-                return false;
-
-            missionApplication.IsDelete = true;
-
-            missionApplication.Mission.TotalSeats++;
-
-            await _dbContext.SaveChangesAsync();
-            return true;
         }
     }
 }

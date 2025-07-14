@@ -17,14 +17,12 @@ namespace Mission.Entities
 
         public DbSet<Models.Mission> Missions { get; set; }
 
-        public DbSet<MissionApplication> MissionApplications { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(new User()
             {
                 Id = 1,
-                FirstName = "piyush",
+                FirstName = "Piyush",
                 LastName = "Mevada",
                 EmailAddress = "piyush@gmail.com",
                 Password = "1617",

@@ -1,15 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Mission.Entities",
-    "\\Mission.Entities\\ViewModels",
-    "\\Mission.Entities\\ViewModels\\Login",
-    "\\Mission.Repositories",
-    "\\Mission.Repositories\\IRepository",
-    "\\Mission.Repositories\\Repository",
-    "\\Mission.Services",
-    "\\Mission.Services\\IService",
-    "\\Mission.Services\\Service"
+    "\\Mission.Repositories"
   ],
+  "SelectedNode": "\\Mission.Api\\appsettings.Development.json",
   "PreviewInSolutionExplorer": false
 }
